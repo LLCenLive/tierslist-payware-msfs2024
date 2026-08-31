@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Tier List Airliners — MSFS 2024 | LLCenLive</title>
+<meta name="description" content="Classe les meilleurs liners payware de Microsoft Flight Simulator 2024 : Fenix, Flight Sim Labs, PMDG, iniBuilds, Aerosoft, ToLiss, TFDi, Fokker, Flight Sim Studio, VirtualCol, Latin VFR.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%88%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     Police de marque : Evogria.
+     Si tu possèdes le fichier de la police, dépose-le dans /fonts
+     puis décommente le bloc ci-dessous — le site l'utilisera
+     automatiquement (fallback Rajdhani sinon).
+     ------------------------------------------------------------
+     @font-face{
+       font-family:'Evogria';
+       src:url('fonts/Evogria.woff2') format('woff2');
+       font-weight:700; font-display:swap;
+     }
+  ============================================================ */
+
+  :root{
+    --bg:#0a1220;
+    --bg-soft:#0d1826;
+    --panel:rgba(20,32,51,.55);
+    --panel-solid:#121e30;
+    --border:rgba(255,255,255,.08);
+    --border-accent:rgba(59,127,232,.35);
+    --accent:#3b7fe8;
+    --accent-2:#6fb3f0;
+    --accent-glow:rgba(59,127,232,.5);
+    --gold:#e8a83b;
+    --text:#eaf0fb;
+    --text-muted:#8397b8;
+    --text-faint:#4d6082;
+    --font-display:'Evogria','Rajdhani',sans-serif;
+    --font-body:'Roboto',sans-serif;
+    --radius:14px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(1100px 520px at 12% -8%, rgba(59,127,232,.16), transparent 60%),
+      radial-gradient(900px 460px at 100% 0%, rgba(59,127,232,.10), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;
+    padding:0 0 48px;
+  }
+
+  a{color:var(--accent-2);}
+
+  ::selection{background:var(--accent);color:#fff;}
+
+  /* ---------- header ---------- */
+  header{
+    max-width:1180px;
+    margin:0 auto;
+    padding:44px 24px 28px;
+  }
+  .brandmark{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--font-body);
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:.4px;
+    color:var(--accent-2);
+    margin-bottom:14px;
+  }
+  .brandmark .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 12px var(--accent-glow);
+  }
+  h1{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(34px,5.4vw,58px);
+    line-height:1.02;
+    margin:0 0 12px;
+    letter-spacing:.3px;
+  }
+  h1 span{color:var(--accent-2);}
+  header p.lead{
+    max-width:640px;
+    color:var(--text-muted);
+    font-size:15.5px;
+    line-height:1.55;
+    margin:0 0 26px;
+  }
+
+  .toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    align-items:center;
+  }
+  .btn{
+    appearance:none;
+    border:1px solid var(--border);
+    background:var(--panel);
+    backdrop-filter:blur(10px);
+    color:var(--text);
+    font-family:var(--font-body);
+    font-weight:500;
+    font-size:14px;
+    padding:10px 16px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:border-color .15s ease, transform .1s ease;
+  }
+  .btn:hover{border-color:var(--border-accent);}
+  .btn:active{transform:scale(.97);}
+  .btn.primary{
+    background:linear-gradient(135deg,var(--accent),#2f66c4);
+    border-color:transparent;
+    box-shadow:0 6px 20px -6px var(--accent-glow);
+  }
+  .btn.primary:hover{filter:brightness(1.08);}
+
+  /* ---------- board ---------- */
+  #board{
+    max-width:1180px;
+    margin:8px auto 0;
+    padding:0 24px;
+  }
+  .tier-row{
+    display:flex;
+    align-items:stretch;
+    margin-bottom:10px;
+    border-radius:var(--radius);
+    overflow:hidden;
+    border:1px solid var(--border);
+  }
+  .tier-label{
+    flex:0 0 84px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:2px;
+    padding:10px 6px;
+    text-align:center;
+  }
+  .tier-label .letter{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:30px;
+    line-height:1;
+  }
+  .tier-label .caption{
+    font-size:10px;
+    color:rgba(234,240,251,.75);
+    letter-spacing:.2px;
+  }
+  .tier-cards{
+    flex:1;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    padding:12px;
+    min-height:76px;
+    align-content:flex-start;
+    background:var(--panel-solid);
+  }
+  .tier-cards.drag-over{background:rgba(59,127,232,.12);}
+
+  .tier-row[data-tier="S"] .tier-label{background:rgba(59,127,232,.42);box-shadow:inset 0 0 30px var(--accent-glow);}
+  .tier-row[data-tier="S"] .tier-cards{background:rgba(59,127,232,.14);}
+  .tier-row[data-tier="A"] .tier-label{background:rgba(59,127,232,.30);}
+  .tier-row[data-tier="A"] .tier-cards{background:rgba(59,127,232,.09);}
+  .tier-row[data-tier="B"] .tier-label{background:rgba(59,127,232,.20);}
+  .tier-row[data-tier="B"] .tier-cards{background:rgba(59,127,232,.055);}
+  .tier-row[data-tier="C"] .tier-label{background:rgba(59,127,232,.13);}
+  .tier-row[data-tier="C"] .tier-cards{background:rgba(59,127,232,.03);}
+  .tier-row[data-tier="D"] .tier-label{background:rgba(59,127,232,.08);}
+  .tier-row[data-tier="D"] .tier-cards{background:rgba(59,127,232,.015);}
+
+  /* ---------- hangar / pool ---------- */
+  #hangar{
+    max-width:1180px;
+    margin:40px auto 0;
+    padding:0 24px;
+  }
+  #hangar h2{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:22px;
+    margin:0 0 4px;
+  }
+  #hangar .sub{
+    color:var(--text-muted);
+    font-size:13.5px;
+    margin:0 0 18px;
+  }
+  .filters{
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+    align-items:center;
+    margin-bottom:16px;
+  }
+  #search{
+    flex:1 1 220px;
+    background:var(--panel-solid);
+    border:1px solid var(--border);
+    color:var(--text);
+    font-family:var(--font-body);
+    font-size:14px;
+    padding:10px 14px;
+    border-radius:10px;
+    outline:none;
+  }
+  #search:focus{border-color:var(--border-accent);}
+  .chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .chip{
+    border:1px solid var(--border);
+    background:transparent;
+    color:var(--text-muted);
+    font-family:var(--font-body);
+    font-size:12.5px;
+    font-weight:500;
+    padding:7px 13px;
+    border-radius:999px;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:all .15s ease;
+  }
+  .chip:hover{border-color:var(--border-accent);color:var(--text);}
+  .chip.active{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#fff;
+  }
+
+  .pool-cards{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    padding:16px;
+    border-radius:var(--radius);
+    border:1px solid var(--border);
+    background:var(--panel);
+    backdrop-filter:blur(10px);
+    min-height:100px;
+  }
+  .pool-cards.drag-over{border-color:var(--border-accent);}
+
+  /* ---------- card ---------- */
+  .card{
+    touch-action:none;
+    user-select:none;
+    -webkit-user-select:none;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    background:var(--panel-solid);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:8px 12px 8px 9px;
+    cursor:grab;
+    min-width:150px;
+  }
+  .card:active{cursor:grabbing;}
+  .card.dragging{
+    box-shadow:0 18px 40px -10px rgba(0,0,0,.55), 0 0 0 1px var(--border-accent);
+    opacity:.96;
+  }
+  .card .icon{
+    flex:0 0 46px;
+    width:46px;height:46px;
+    border-radius:9px;
+    overflow:hidden;
+    background:rgba(255,255,255,.04);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .card .icon img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .card .icon svg{width:30px;height:30px;}
+  .card .meta{min-width:0;}
+  .card .name{
+    font-size:13.5px;
+    font-weight:700;
+    line-height:1.15;
+    white-space:nowrap;
+  }
+  .card .dev{
+    font-size:10.5px;
+    color:var(--text-muted);
+    white-space:nowrap;
+    display:flex;
+    align-items:center;
+    gap:5px;
+    margin-top:2px;
+  }
+  .card .dev .catdot{
+    width:6px;height:6px;border-radius:50%;
+    flex:0 0 auto;
+  }
+  .card.hidden{display:none;}
+
+  /* ---------- footer ---------- */
+  footer{
+    max-width:1180px;
+    margin:52px auto 0;
+    padding:20px 24px 0;
+    border-top:1px solid var(--border);
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 18px;
+    align-items:center;
+    justify-content:space-between;
+    color:var(--text-faint);
+    font-size:12.5px;
+  }
+  footer a{color:var(--text-muted);text-decoration:none;font-weight:500;}
+  footer a:hover{color:var(--accent-2);}
+
+  @media (max-width:640px){
+    .tier-label{flex-basis:56px;}
+    .tier-label .letter{font-size:22px;}
+    .tier-label .caption{display:none;}
+    .card{min-width:132px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brandmark"><span class="dot"></span> LLCENLIVE · MSFS 2024</div>
+  <h1>Tier List <span>Airliners</span></h1>
+  <p class="lead">Glisse-dépose les liners payware dans les tiers S à D pour construire ton classement. Onze studios, un seul verdict. Le classement se fait en direct, sur ton écran — rien n'est envoyé nulle part.</p>
+  <div class="toolbar">
+    <button class="btn primary" id="btn-export">Exporter en image</button>
+    <button class="btn" id="btn-reset">Réinitialiser</button>
+  </div>
+</header>
+
+<div id="board">
+  <div class="tier-row" data-tier="S">
+    <div class="tier-label"><span class="letter">S</span><span class="caption">Références</span></div>
+    <div class="tier-cards drop-zone" data-tier="S"></div>
+  </div>
+  <div class="tier-row" data-tier="A">
+    <div class="tier-label"><span class="letter">A</span><span class="caption">Excellents</span></div>
+    <div class="tier-cards drop-zone" data-tier="A"></div>
+  </div>
+  <div class="tier-row" data-tier="B">
+    <div class="tier-label"><span class="letter">B</span><span class="caption">Solides</span></div>
+    <div class="tier-cards drop-zone" data-tier="B"></div>
+  </div>
+  <div class="tier-row" data-tier="C">
+    <div class="tier-label"><span class="letter">C</span><span class="caption">Corrects</span></div>
+    <div class="tier-cards drop-zone" data-tier="C"></div>
+  </div>
+  <div class="tier-row" data-tier="D">
+    <div class="tier-label"><span class="letter">D</span><span class="caption">À éviter</span></div>
+    <div class="tier-cards drop-zone" data-tier="D"></div>
+  </div>
+</div>
+
+<div id="hangar">
+  <h2>Hangar</h2>
+  <p class="sub">Tous les liners non classés. Filtre par studio ou cherche un modèle, puis fais-le glisser dans un tier.</p>
+  <div class="filters">
+    <input type="text" id="search" placeholder="Rechercher un avion (ex. A350, 737, CRJ...)">
+    <div class="chips" id="chips"></div>
+  </div>
+  <div class="pool-cards drop-zone" id="pool"></div>
+</div>
+
+<footer>
+  <span>© 2026 Lucas — <a href="https://twitch.tv/llcenlive" target="_blank" rel="noopener">twitch.tv/llcenlive</a></span>
+  <span>Tier List Airliners MSFS 2024 · fait pour la communauté LLCenLive</span>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+/* ==========================================================
+   Données — recensement des liners payware MSFS 2024
+   (à jour à la construction de l'outil ; MAJ facile ci-dessous)
+========================================================== */
+const DEV_LABELS = {
+  FNX:  'Fenix Simulations',
+  FSL:  'Flight Sim Labs',
+  PMDG: 'PMDG',
+  INI:  'iniBuilds',
+  AS:   'Aerosoft',
+  TL:   'ToLiss',
+  TFDI: 'TFDi Design',
+  FOK:  'Fokker',
+  FSS:  'Flight Sim Studio',
+  VC:   'VirtualCol',
+  LVFR: 'Latin VFR'
+};
+
+const CAT_LABELS = {
+  narrow:   'Moyen-courrier',
+  wide:     'Long-courrier',
+  regional: 'Régional',
+  cargo:    'Cargo / spécial',
+  classic:  'Classique'
+};
+const CAT_COLORS = {
+  narrow:   'var(--accent)',
+  wide:     'var(--accent-2)',
+  regional: '#8aa2c4',
+  cargo:    '#5b6c88',
+  classic:  'var(--gold)'
+};
+
+// id, nom, sous-titre court, [devs], catégorie, configuration réelle (archétype de silhouette)
+const AIRCRAFT = [
+  // Fenix Simulations
+  ['fnx-a319','A319','CFM/IAE',['FNX'],'narrow','twinNarrow'],
+  ['fnx-a320','A320','CFM/IAE',['FNX'],'narrow','twinNarrow'],
+  ['fnx-a321','A321','CFM/IAE',['FNX'],'narrow','twinNarrow'],
+  // Flight Sim Labs
+  ['fsl-a321ceo','A321ceo','',['FSL'],'narrow','twinNarrow'],
+  ['fsl-a321neo','A321neo','+ LR',['FSL'],'narrow','twinNarrow'],
+  // PMDG
+  ['pmdg-737-600','737-600','NG',['PMDG'],'narrow','twinNarrow'],
+  ['pmdg-737-700','737-700','NG',['PMDG'],'narrow','twinNarrow'],
+  ['pmdg-737-800','737-800','NG',['PMDG'],'narrow','twinNarrow'],
+  ['pmdg-737-900','737-900','NG',['PMDG'],'narrow','twinNarrow'],
+  ['pmdg-777-200er','777-200ER','',['PMDG'],'wide','twinWide'],
+  ['pmdg-777-200lr','777-200LR','',['PMDG'],'wide','twinWide'],
+  ['pmdg-777-300er','777-300ER','',['PMDG'],'wide','twinWide'],
+  ['pmdg-777f','777F','Cargo',['PMDG'],'cargo','twinWide'],
+  ['pmdg-dc6','DC-6','Classique',['PMDG'],'classic','quad'],
+  // iniBuilds
+  ['ini-a300','A300-600R','',['INI'],'wide','twinWide'],
+  ['ini-a310','A310','',['INI'],'wide','twinWide'],
+  ['ini-a320neo','A320neo V2','',['INI'],'narrow','twinNarrow'],
+  ['ini-a321lr','A321LR','',['INI'],'narrow','twinNarrow'],
+  ['ini-a330-200','A330-200','',['INI'],'wide','twinWide'],
+  ['ini-a330-300','A330-300','',['INI'],'wide','twinWide'],
+  ['ini-a330-p2f','A330-300 P2F','Cargo',['INI'],'cargo','twinWide'],
+  ['ini-belugaxl','Beluga XL','A330-743L',['INI'],'cargo','beluga'],
+  ['ini-a340','A340 Airliner','',['INI'],'wide','quad'],
+  ['ini-a350-900','A350-900','',['INI'],'wide','twinWide'],
+  ['ini-a350-1000','A350-1000','',['INI'],'wide','twinWide'],
+  ['ini-l1011','L-1011 TriStar','Classique',['INI'],'classic','trijet'],
+  ['ini-707','707-320C','Famous Flyer',['INI'],'classic','quad'],
+  ['ini-skyvan','SC.7 Skyvan','Local Legend',['INI'],'regional','turboprop'],
+  ['ini-ys11','NAMC YS-11','Local Legend',['INI'],'classic','turboprop'],
+  // Aerosoft
+  ['as-crj550','CRJ550','',['AS'],'regional','rearTwin'],
+  ['as-crj700','CRJ700','',['AS'],'regional','rearTwin'],
+  ['as-crj900','CRJ900','',['AS'],'regional','rearTwin'],
+  ['as-crj1000','CRJ1000','',['AS'],'regional','rearTwin'],
+  ['as-twinotter','Twin Otter','DHC-6',['AS'],'regional','turboprop'],
+  // Aerosoft × ToLiss (produit conjoint)
+  ['as-tl-a340600','A340-600 Pro','Aerosoft × ToLiss',['AS','TL'],'wide','quad'],
+  // TFDi Design
+  ['tfdi-md11','MD-11','Tri-jet',['TFDI'],'wide','trijet'],
+  // Fokker (multi-studios)
+  ['fok-f27','F27 Friendship','iniBuilds/Microsoft',['FOK'],'classic','turboprop'],
+  ['fok-f28','F28 Professional','Just Flight',['FOK'],'classic','rearTwin'],
+  ['fok-f70','F70','Just Flight',['FOK'],'narrow','rearTwin'],
+  ['fok-f100','F100','Just Flight',['FOK'],'narrow','rearTwin'],
+  // Flight Sim Studio
+  ['fss-727-100','727-100','Tri-jet',['FSS'],'classic','trijet'],
+  ['fss-727-200','727-200','Passagers',['FSS'],'classic','trijet'],
+  ['fss-727f','727 Freighter','Cargo',['FSS'],'cargo','trijet'],
+  ['fss-e170','E170','',['FSS'],'regional','twinNarrow'],
+  ['fss-e175','E175','',['FSS'],'regional','twinNarrow'],
+  ['fss-e190','E190','',['FSS'],'regional','twinNarrow'],
+  ['fss-e195','E195','',['FSS'],'regional','twinNarrow'],
+  // VirtualCol
+  ['vc-a220','A220','',['VC'],'narrow','twinNarrow'],
+  ['vc-crj200','CRJ-200','',['VC'],'regional','rearTwin'],
+  ['vc-dash8-100','Dash 8-100','',['VC'],'regional','turboprop'],
+  ['vc-dash8-200','Dash 8 Q200','',['VC'],'regional','turboprop'],
+  ['vc-dash8-300','Dash 8 Q300','',['VC'],'regional','turboprop'],
+  ['vc-e170175','E170/175','',['VC'],'regional','twinNarrow'],
+  ['vc-e190195','E190/195','',['VC'],'regional','twinNarrow'],
+  // Latin VFR
+  ['lvfr-a318','A318','',['LVFR'],'narrow','twinNarrow'],
+  ['lvfr-a319','A319','',['LVFR'],'narrow','twinNarrow'],
+  ['lvfr-a320ceo','A320ceo','',['LVFR'],'narrow','twinNarrow'],
+  ['lvfr-a321ceo','A321ceo','',['LVFR'],'narrow','twinNarrow'],
+  ['lvfr-a321neo','A321neo','',['LVFR'],'narrow','twinNarrow'],
+  ['lvfr-a330-200','A330-200','',['LVFR'],'wide','twinWide'],
+  ['lvfr-a330-300','A330-300','',['LVFR'],'wide','twinWide'],
+  ['lvfr-a340-300','A340-300','',['LVFR'],'wide','quad'],
+  ['lvfr-a380','A380','',['LVFR'],'wide','quad'],
+];
+
+/* ---------- icônes : silhouettes vectorielles originales, top-view,
+   une par configuration réelle d'avion (aucune photo/rendu tiers) ---------- */
+const ARCH_ICONS = {
+  twinNarrow: `<svg viewBox="0 0 60 60" fill="currentColor">
+    <polygon points="30,4 33,12 27,12"/>
+    <rect x="27" y="11" width="6" height="38" rx="3"/>
+    <polygon points="27,22 6,34 27,30"/>
+    <polygon points="33,22 54,34 33,30"/>
+    <polygon points="27,42 17,48 27,46"/>
+    <polygon points="33,42 43,48 33,46"/>
+    <ellipse cx="16" cy="31" rx="2.6" ry="4.2"/>
+    <ellipse cx="44" cy="31" rx="2.6" ry="4.2"/>
+  </svg>`,
+  twinWide: `<svg viewBox="0 0 60 60" fill="currentColor">
+    <polygon points="30,3 33.5,12 26.5,12"/>
+    <rect x="26" y="11" width="8" height="39" rx="4"/>
+    <polygon points="26,21 3,35 26,29"/>
+    <polygon points="34,21 57,35 34,29"/>
+    <polygon points="26,41 15,48 26,45"/>
+    <polygon points="34,41 45,48 34,45"/>
+    <ellipse cx="14" cy="32" rx="3" ry="4.6"/>
+    <ellipse cx="46" cy="32" rx="3" ry="4.6"/>
+  </svg>`,
+  rearTwin: `<svg viewBox="0 0 60 60" fill="currentColor">
+    <polygon points="30,5 33,13 27,13"/>
+    <rect x="27.5" y="12" width="5" height="37" rx="2.5"/>
+    <polygon points="27.5,24 8,34 27.5,31"/>
+    <polygon points="32.5,24 52,34 32.5,31"/>
+    <ellipse cx="25" cy="44" rx="2.2" ry="3.8"/>
+    <ellipse cx="35" cy="44" rx="2.2" ry="3.8"/>
+    <polygon points="27.5,41 19,47 27.5,45"/>
+    <polygon points="32.5,41 41,47 32.5,45"/>
+  </svg>`,
+  quad: `<svg viewBox="0 0 60 60" fill="currentColor">
+    <polygon points="30,3 33.5,12 26.5,12"/>
+    <rect x="26" y="11" width="8" height="39" rx="4"/>
+    <polygon points="26,20 2,36 26,29"/>
+    <polygon points="34,20 58,36 34,29"/>
+    <polygon points="26,41 15,48 26,45"/>
+    <polygon points="34,41 45,48 34,45"/>
+    <ellipse cx="10" cy="32" rx="2.4" ry="4"/>
+    <ellipse cx="19" cy="27" rx="2.4" ry="4"/>
+    <ellipse cx="50" cy="32" rx="2.4" ry="4"/>
+    <ellipse cx="41" cy="27" rx="2.4" ry="4"/>
+  </svg>`,
+  trijet: `<svg viewBox="0 0 60 60" fill="currentColor">
+    <polygon points="30,4 33,12 27,12"/>
+    <rect x="27" y="11" width="6" height="38" rx="3"/>
+    <polygon points="27,23 7,35 27,30"/>
+    <polygon points="33,23 53,35 33,30"/>
+    <polygon points="27,40 18,47 27,44"/>
+    <polygon points="33,40 42,47 33,44"/>
+    <ellipse cx="17" cy="32" rx="2.4" ry="4"/>
+    <ellipse cx="43" cy="32" rx="2.4" ry="4"/>
+    <ellipse cx="30" cy="47" rx="2.6" ry="4.4"/>
+  </svg>`,
+  turboprop: `<svg viewBox="0 0 60 60" fill="currentColor">
+    <polygon points="30,6 32.5,13 27.5,13"/>
+    <rect x="27.5" y="12" width="5" height="36" rx="2.5"/>
+    <polygon points="27.5,20 9,28 27.5,26"/>
+    <polygon points="32.5,20 51,28 32.5,26"/>
+    <polygon points="27.5,40 19,46 27.5,44"/>
+    <polygon points="32.5,40 41,46 32.5,44"/>
+    <circle cx="19" cy="24" r="3.4" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    <circle cx="41" cy="24" r="3.4" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    <line x1="19" y1="20.6" x2="19" y2="27.4" stroke="currentColor" stroke-width="1.2"/>
+    <line x1="15.6" y1="24" x2="22.4" y2="24" stroke="currentColor" stroke-width="1.2"/>
+    <line x1="41" y1="20.6" x2="41" y2="27.4" stroke="currentColor" stroke-width="1.2"/>
+    <line x1="37.6" y1="24" x2="44.4" y2="24" stroke="currentColor" stroke-width="1.2"/>
+  </svg>`,
+  beluga: `<svg viewBox="0 0 60 60" fill="currentColor">
+    <polygon points="30,3 34,12 26,12"/>
+    <path d="M22,11 h16 a5,5 0 0 1 5,5 v26 a5,5 0 0 1 -5,5 h-16 a5,5 0 0 1 -5,-5 v-26 a5,5 0 0 1 5,-5 z"/>
+    <polygon points="24,28 4,38 24,34"/>
+    <polygon points="36,28 56,38 36,34"/>
+    <polygon points="24,42 15,48 24,46"/>
+    <polygon points="36,42 45,48 36,46"/>
+    <ellipse cx="13" cy="35" rx="2.8" ry="4.4"/>
+    <ellipse cx="47" cy="35" rx="2.8" ry="4.4"/>
+  </svg>`
+};
+
+function planeIcon(archetype, color){
+  const svg = ARCH_ICONS[archetype] || ARCH_ICONS.twinNarrow;
+  return `<span style="color:${color};display:flex;">${svg}</span>`;
+}
+
+/* ---------- rendu ---------- */
+const pool = document.getElementById('pool');
+const chipsWrap = document.getElementById('chips');
+let activeDev = 'ALL';
+
+function buildChips(){
+  const all = document.createElement('button');
+  all.className = 'chip active';
+  all.textContent = 'Tous';
+  all.dataset.dev = 'ALL';
+  chipsWrap.appendChild(all);
+  Object.keys(DEV_LABELS).forEach(code=>{
+    const c = document.createElement('button');
+    c.className = 'chip';
+    c.textContent = DEV_LABELS[code];
+    c.dataset.dev = code;
+    chipsWrap.appendChild(c);
+  });
+  chipsWrap.addEventListener('click', e=>{
+    const chip = e.target.closest('.chip');
+    if(!chip) return;
+    chipsWrap.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    activeDev = chip.dataset.dev;
+    applyFilters();
+  });
+}
+
+function makeCard(item){
+  const [id,name,sub,devs,cat,arch] = item;
+  const el = document.createElement('div');
+  el.className = 'card';
+  el.dataset.id = id;
+  el.dataset.devs = devs.join(',');
+  el.dataset.name = name.toLowerCase();
+  const devLabel = devs.map(d=>DEV_LABELS[d]).join(' × ');
+  const fallbackSvg = planeIcon(arch, CAT_COLORS[cat]);
+  el.innerHTML = `
+    <span class="icon" data-id="${id}" data-tries="0" data-fallback="${encodeURIComponent(fallbackSvg)}">
+      <img src="images/${id}.jpg" alt="${name}" loading="lazy" onerror="handleThumbError(this)">
+    </span>
+    <span class="meta">
+      <span class="name">${name}${sub ? ` <span style="color:var(--text-faint);font-weight:400;">· ${sub}</span>`:''}</span>
+      <span class="dev"><span class="catdot" style="background:${CAT_COLORS[cat]}"></span>${devLabel}</span>
+    </span>`;
+  return el;
+}
+
+/* Cascade d'extensions pour tes propres images (images/{id}.ext).
+   Si aucune n'existe, on retombe sur la silhouette vectorielle —
+   rien ne casse si tu n'as pas encore illustré un avion. */
+const IMG_EXTS = ['jpg','jpeg','png','webp'];
+function handleThumbError(imgEl){
+  const wrap = imgEl.parentElement;
+  const tries = parseInt(wrap.dataset.tries, 10) + 1;
+  wrap.dataset.tries = tries;
+  if(tries < IMG_EXTS.length){
+    imgEl.src = `images/${wrap.dataset.id}.${IMG_EXTS[tries]}`;
+  } else {
+    wrap.innerHTML = decodeURIComponent(wrap.dataset.fallback);
+  }
+}
+
+function renderPool(){
+  AIRCRAFT.forEach(item=>pool.appendChild(makeCard(item)));
+}
+
+function applyFilters(){
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  pool.querySelectorAll('.card').forEach(card=>{
+    const devs = card.dataset.devs.split(',');
+    const matchDev = activeDev === 'ALL' || devs.includes(activeDev);
+    const matchSearch = !q || card.dataset.name.includes(q);
+    card.classList.toggle('hidden', !(matchDev && matchSearch));
+  });
+}
+
+document.getElementById('search').addEventListener('input', applyFilters);
+
+/* ---------- drag & drop (Pointer Events, souris + tactile) ---------- */
+let dragEl=null, dragging=false, offsetX=0, offsetY=0, startX=0, startY=0, originalRect=null;
+
+function clearDragOver(){
+  document.querySelectorAll('.drop-zone.drag-over').forEach(z=>z.classList.remove('drag-over'));
+}
+
+document.addEventListener('pointerdown', e=>{
+  const card = e.target.closest('.card');
+  if(!card) return;
+  if(e.pointerType === 'mouse' && e.button !== 0) return;
+  dragEl = card;
+  dragging = false;
+  originalRect = card.getBoundingClientRect();
+  offsetX = e.clientX - originalRect.left;
+  offsetY = e.clientY - originalRect.top;
+  startX = e.clientX; startY = e.clientY;
+  card.setPointerCapture(e.pointerId);
+});
+
+document.addEventListener('pointermove', e=>{
+  if(!dragEl) return;
+  const dx = e.clientX - startX, dy = e.clientY - startY;
+  if(!dragging && Math.hypot(dx,dy) > 6){
+    dragging = true;
+    dragEl.classList.add('dragging');
+    dragEl.style.width = originalRect.width + 'px';
+    document.body.appendChild(dragEl);
+    dragEl.style.position = 'fixed';
+    dragEl.style.zIndex = 1000;
+    dragEl.style.pointerEvents = 'none';
+  }
+  if(dragging){
+    dragEl.style.left = (e.clientX - offsetX) + 'px';
+    dragEl.style.top = (e.clientY - offsetY) + 'px';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    clearDragOver();
+    const target = under && under.closest('.drop-zone');
+    if(target) target.classList.add('drag-over');
+  }
+});
+
+function endDrag(e){
+  if(!dragEl) return;
+  if(dragging){
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    const target = under && under.closest('.drop-zone');
+    clearDragOver();
+    dragEl.style.position = '';
+    dragEl.style.left = '';
+    dragEl.style.top = '';
+    dragEl.style.width = '';
+    dragEl.style.zIndex = '';
+    dragEl.style.pointerEvents = '';
+    dragEl.classList.remove('dragging');
+    (target || pool).appendChild(dragEl);
+    applyFilters();
+  }
+  dragEl = null;
+  dragging = false;
+}
+document.addEventListener('pointerup', endDrag);
+document.addEventListener('pointercancel', endDrag);
+
+/* ---------- réinitialiser ---------- */
+document.getElementById('btn-reset').addEventListener('click', ()=>{
+  document.querySelectorAll('.tier-cards .card').forEach(c=>pool.appendChild(c));
+  document.getElementById('search').value = '';
+  activeDev = 'ALL';
+  chipsWrap.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  chipsWrap.querySelector('.chip[data-dev="ALL"]').classList.add('active');
+  applyFilters();
+});
+
+/* ---------- export image ---------- */
+document.getElementById('btn-export').addEventListener('click', ()=>{
+  if(typeof html2canvas === 'undefined'){
+    alert("L'export a besoin d'une connexion internet (chargement de html2canvas). Réessaie une fois en ligne.");
+    return;
+  }
+  const board = document.querySelector('header').closest('body'); // capture large
+  html2canvas(document.body, {backgroundColor:'#0a1220', scale:2, useCORS:true}).then(canvas=>{
+    const link = document.createElement('a');
+    link.download = 'tierlist-msfs2024-llcenlive.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
+});
+
+buildChips();
+renderPool();
+</script>
+</body>
+</html>
