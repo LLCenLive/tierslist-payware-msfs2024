@@ -253,6 +253,70 @@
     color:#fff;
   }
 
+  .btn-add-toggle{margin-left:auto;}
+
+  .add-panel{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    padding:16px;
+    margin-bottom:14px;
+    border-radius:var(--radius);
+    border:1px solid var(--border-accent);
+    background:rgba(59,127,232,.06);
+    backdrop-filter:blur(10px);
+  }
+  .add-panel[hidden]{display:none;}
+  .add-panel .field-label{
+    font-size:11px;
+    color:var(--text-muted);
+    margin-bottom:4px;
+    display:block;
+  }
+  .add-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(150px,1fr));
+    gap:12px;
+  }
+  .add-panel input[type="text"],
+  .add-panel select{
+    width:100%;
+    background:var(--panel-solid);
+    border:1px solid var(--border);
+    color:var(--text);
+    font-family:var(--font-body);
+    font-size:14px;
+    padding:9px 12px;
+    border-radius:9px;
+    outline:none;
+  }
+  .add-panel input[type="text"]:focus,
+  .add-panel select:focus{border-color:var(--border-accent);}
+  .add-checks{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 16px;
+  }
+  .add-checks label{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:13px;
+    color:var(--text-muted);
+    cursor:pointer;
+  }
+  .add-checks input{accent-color:var(--accent);}
+  .add-actions{
+    display:flex;
+    gap:10px;
+    align-items:center;
+  }
+  .add-hint{
+    font-size:12px;
+    color:var(--text-faint);
+    margin:0;
+  }
+
   .pool-cards{
     display:flex;
     flex-wrap:wrap;
@@ -268,6 +332,7 @@
 
   /* ---------- card ---------- */
   .card{
+    position:relative;
     touch-action:none;
     user-select:none;
     -webkit-user-select:none;
@@ -322,6 +387,23 @@
     flex:0 0 auto;
   }
   .card.hidden{display:none;}
+  .card-delete{
+    position:absolute;
+    top:-6px;
+    right:-6px;
+    width:18px;height:18px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    background:var(--panel-solid);
+    color:var(--text-muted);
+    font-size:11px;
+    line-height:1;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    opacity:.55;
+    transition:opacity .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .card-delete:hover{opacity:1;color:#fff;border-color:var(--border-accent);background:var(--accent);}
 
   /* ---------- footer ---------- */
   footer{
@@ -393,7 +475,39 @@
   <div class="filters">
     <input type="text" id="search" placeholder="Rechercher un avion (ex. A350, 737, CRJ...)">
     <div class="chips" id="chips"></div>
+    <button class="btn btn-add-toggle" id="btn-add-toggle">+ Ajouter un avion</button>
   </div>
+
+  <div class="add-panel" id="add-panel" hidden>
+    <div class="add-grid">
+      <div>
+        <span class="field-label">Nom</span>
+        <input type="text" id="add-name" placeholder="ex. A321XLR">
+      </div>
+      <div>
+        <span class="field-label">Sous-titre (optionnel)</span>
+        <input type="text" id="add-sub" placeholder="ex. CFM/IAE">
+      </div>
+      <div>
+        <span class="field-label">Studio</span>
+        <select id="add-dev"></select>
+      </div>
+      <div>
+        <span class="field-label">Catégorie</span>
+        <select id="add-cat"></select>
+      </div>
+      <div>
+        <span class="field-label">Configuration réelle</span>
+        <select id="add-arch"></select>
+      </div>
+    </div>
+    <div class="add-actions">
+      <button class="btn primary" id="add-submit">Ajouter à la tier list</button>
+      <button class="btn" id="add-cancel">Annuler</button>
+      <p class="add-hint">L'avion apparaît dans le hangar, prêt à glisser. Nomme ensuite ton image <code>images/&lt;id-généré&gt;.jpg</code> si tu veux l'illustrer.</p>
+    </div>
+  </div>
+
   <div class="pool-cards drop-zone" id="pool"></div>
 </div>
 
@@ -637,9 +751,10 @@ function makeCard(item){
   el.dataset.id = id;
   el.dataset.devs = devs.join(',');
   el.dataset.name = name.toLowerCase();
-  const devLabel = devs.map(d=>DEV_LABELS[d]).join(' × ');
+  const devLabel = devs.map(d=>DEV_LABELS[d]||d).join(' × ');
   const fallbackSvg = planeIcon(arch, CAT_COLORS[cat]);
   el.innerHTML = `
+    <button type="button" class="card-delete" title="Supprimer">✕</button>
     <span class="icon" data-id="${id}" data-tries="0" data-fallback="${encodeURIComponent(fallbackSvg)}">
       <img src="images/${id}.jpg" alt="${name}" loading="lazy" onerror="handleThumbError(this)">
     </span>
@@ -688,7 +803,14 @@ function clearDragOver(){
   document.querySelectorAll('.drop-zone.drag-over').forEach(z=>z.classList.remove('drag-over'));
 }
 
+document.addEventListener('click', e=>{
+  const del = e.target.closest('.card-delete');
+  if(!del) return;
+  del.closest('.card').remove();
+});
+
 document.addEventListener('pointerdown', e=>{
+  if(e.target.closest('.card-delete')) return;
   const card = e.target.closest('.card');
   if(!card) return;
   if(e.pointerType === 'mouse' && e.button !== 0) return;
@@ -768,6 +890,76 @@ document.getElementById('btn-export').addEventListener('click', ()=>{
     link.href = canvas.toDataURL('image/png');
     link.click();
   });
+});
+
+/* ---------- ajouter un avion personnalisé ---------- */
+const ARCH_LABELS = {
+  twinNarrow: 'Bi-réacteur classique (A320, 737...)',
+  twinWide:   'Bi-réacteur gros-porteur (A330, 777...)',
+  rearTwin:   'Régional, moteurs arrière (CRJ, Fokker...)',
+  quad:       'Quadriréacteur (A340, A380...)',
+  trijet:     'Tri-jet (727, MD-11...)',
+  turboprop:  'Turbopropulseur (Dash 8, ATR...)',
+  beluga:     'Fuselage spécial (type Beluga)'
+};
+
+function fillSelect(sel, obj){
+  sel.innerHTML = Object.keys(obj).map(k=>`<option value="${k}">${obj[k]}</option>`).join('');
+}
+
+function slugify(str){
+  return str.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9]+/g,'-')
+    .replace(/^-+|-+$/g,'') || 'item';
+}
+
+function uniqueId(base){
+  let id = base, n = 2;
+  while(document.querySelector(`.card[data-id="${id}"]`)){
+    id = `${base}-${n}`; n++;
+  }
+  return id;
+}
+
+const addPanel = document.getElementById('add-panel');
+const addNameInput = document.getElementById('add-name');
+
+fillSelect(document.getElementById('add-dev'), DEV_LABELS);
+fillSelect(document.getElementById('add-cat'), CAT_LABELS);
+fillSelect(document.getElementById('add-arch'), ARCH_LABELS);
+
+document.getElementById('btn-add-toggle').addEventListener('click', ()=>{
+  addPanel.hidden = !addPanel.hidden;
+  if(!addPanel.hidden) addNameInput.focus();
+});
+
+document.getElementById('add-cancel').addEventListener('click', ()=>{
+  addPanel.hidden = true;
+});
+
+document.getElementById('add-submit').addEventListener('click', ()=>{
+  const name = addNameInput.value.trim();
+  if(!name){ addNameInput.focus(); return; }
+  const sub = document.getElementById('add-sub').value.trim();
+  const dev = document.getElementById('add-dev').value;
+  const cat = document.getElementById('add-cat').value;
+  const arch = document.getElementById('add-arch').value;
+  const id = uniqueId(slugify(`${dev}-${name}`));
+
+  const card = makeCard([id, name, sub, [dev], cat, arch]);
+  pool.appendChild(card);
+
+  // on s'assure que le nouvel item est visible même si un filtre était actif
+  activeDev = 'ALL';
+  chipsWrap.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  chipsWrap.querySelector('.chip[data-dev="ALL"]').classList.add('active');
+  document.getElementById('search').value = '';
+  applyFilters();
+
+  addNameInput.value = '';
+  document.getElementById('add-sub').value = '';
+  addNameInput.focus();
 });
 
 buildChips();
