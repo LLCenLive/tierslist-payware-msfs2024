@@ -187,6 +187,11 @@
   .tier-row[data-tier="D"] .tier-label{background:rgba(59,127,232,.08);}
   .tier-row[data-tier="D"] .tier-cards{background:rgba(59,127,232,.015);}
 
+  .tier-row[data-tier="NT"]{margin-top:22px;border-style:dashed;border-color:rgba(255,255,255,.14);}
+  .tier-row[data-tier="NT"] .tier-label{background:rgba(255,255,255,.04);}
+  .tier-row[data-tier="NT"] .tier-label .letter{color:var(--text-muted);font-size:22px;}
+  .tier-row[data-tier="NT"] .tier-cards{background:rgba(255,255,255,.02);}
+
   /* ---------- hangar / pool ---------- */
   #hangar{
     max-width:1180px;
@@ -375,6 +380,10 @@
   <div class="tier-row" data-tier="D">
     <div class="tier-label"><span class="letter">D</span><span class="caption">À éviter</span></div>
     <div class="tier-cards drop-zone" data-tier="D"></div>
+  </div>
+  <div class="tier-row" data-tier="NT">
+    <div class="tier-label"><span class="letter">?</span><span class="caption">Pas testé</span></div>
+    <div class="tier-cards drop-zone" data-tier="NT"></div>
   </div>
 </div>
 
